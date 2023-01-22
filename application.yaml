@@ -1,22 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: nginx
+  name: test-set
+  namespace: argocd  
 spec:
   generators:
   - list: 
       # Parameters are generated based on this cluster list, to be substituted
       # into the template below.
-      elements: 
-      - cluster: k3d-aadiclus
-        url: https://172.18.0.2:6443
-      - cluster: arn:aws:eks:us-east-1:773914189848:cluster/argocd-eks
-        url: https://20E51040E0EBA3AB8E3072AA02FC2E2B.gr7.us-east-1.eks.amazonaws.com
+      elements:
+      - cluster: kubernetes-service
+        url: https://kubernetes.default.svc  
+      - cluster: arn:aws:eks:us-east-1:773914189848:cluster/argocd-eks 
+        url: https://20E51040E0EBA3AB8E3072AA02FC2E2B.gr7.us-east-1.eks.amazonaws.com 
+
   template: 
     # An Argo CD Application template, with support for parameter substitution 
     # with values from parameters generated above.
     metadata:
-      name: '{{cluster}}-nginx'
+      name: test-set
     spec:
       project: default
       source:
@@ -25,4 +27,9 @@ spec:
         path: dev
       destination:
         server: '{{url}}'
-        namespace: myapp
+        namespace: default
+          # syncPolicy:
+          # automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+          # prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+          # selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+          # allowEmpty: false # 
