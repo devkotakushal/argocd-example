@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: test-set
+  name: nginx
   namespace: argocd  
 spec:
   generators:
@@ -18,7 +18,7 @@ spec:
     # An Argo CD Application template, with support for parameter substitution 
     # with values from parameters generated above.
     metadata:
-      name: test-set
+      name: '{{cluster}}-nginx'
     spec:
       project: default
       source:
