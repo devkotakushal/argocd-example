@@ -12,9 +12,9 @@ spec:
       # - cluster: kubernetes-service
       #   url: https://kubernetes.default.svc  
       - cluster: k3d-aadiclus
-        url: https://172.18.0.2:6443
+        url: https://172.18.0.4:6443
       - cluster: eks
-        url: https://20E51040E0EBA3AB8E3072AA02FC2E2B.gr7.us-east-1.eks.amazonaws.com 
+        url: https://2122AFDCD567B99B9AFFD5AADBE30988.gr7.us-east-1.eks.amazonaws.com 
 
   template: 
     # An Argo CD Application template, with support for parameter substitution 
